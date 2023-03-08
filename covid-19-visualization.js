@@ -1,11 +1,11 @@
 const linesColorScale = d3.scaleOrdinal()
     .range(["#3EB0E1", "#EA5F5F"]);
-let highlightedState;
+var highlightedState;
 const lineOpacity = 0.5;
 const legendWidth = 200;
-let stateAbbrev = {};
-let dailyData;
-let line;
+var stateAbbrev = {};
+var dailyData;
+var line;
 
 loadData();
 function loadData() {
@@ -16,8 +16,8 @@ function loadData() {
         d3.select("#legend").attr("height", 280).attr("width", legendWidth)
         //.style("background-color", "plum");
         dailyData = parsedailyData(dataset[0]);
-        let totalData = parseTotalData(dataset[0]);
-        let stateData = parseBarData(dataset[0]);
+        var totalData = parseTotalData(dataset[0]);
+        var stateData = parseBarData(dataset[0]);
         dataset[1].forEach(d => {
             stateAbbrev[d.state] = d.name;
         });
@@ -29,7 +29,7 @@ function loadData() {
 }
 
 function plotBubbleChart(data) {
-    let titleHt = document.getElementById('title').offsetHeight;
+    var titleHt = document.getElementById('title').offsetHeight;
 
     const margin = { top: 30, right: 30, bottom: 50, left: 100 },
         width = ((window.innerWidth - legendWidth - 10) / 2) - margin.left - margin.right,
@@ -42,8 +42,8 @@ function plotBubbleChart(data) {
         .append("g")
         .attr("transform", `translate(${margin.left},${margin.top})`);
 
-    let states = Object.keys(data);
-    let maxHospitalized = d3.max(states, function (d) { return data[d].hospitalizedCurrently; });
+    var states = Object.keys(data);
+    var maxHospitalized = d3.max(states, function (d) { return data[d].hospitalizedCurrently; });
 
     const colorScaleHosipitalized = d3.scaleLinear()
         .domain([0, maxHospitalized])
@@ -131,14 +131,14 @@ function plotBubbleChart(data) {
         .style("font-size", 13);
 
     // add legend
-    let legendValues = [Math.round(maxHospitalized / 8), maxHospitalized / 2, maxHospitalized];
-    let colorValues = [{ color: '#E1D7FF', value: 0 }, { color: '#7346F5', value: maxHospitalized }];
+    var legendValues = [Math.round(maxHospitalized / 8), maxHospitalized / 2, maxHospitalized];
+    var colorValues = [{ color: '#E1D7FF', value: 0 }, { color: '#7346F5', value: maxHospitalized }];
     addCircleLegend('#legend', legendValues, sizeScale);
     addRectangleLegend('#legend', colorValues);
 }
 
 function plotLineChart(data) {
-    let titleHt = document.getElementById('title').offsetHeight;
+    var titleHt = document.getElementById('title').offsetHeight;
     const margin = { top: 10, right: 10, bottom: 40, left: 60 },
         width = ((window.innerWidth - legendWidth - 10) / 2) - margin.left - margin.right,
         height = (window.innerHeight - titleHt) / 2 - margin.top - margin.bottom;
@@ -157,7 +157,7 @@ function plotLineChart(data) {
         .domain([new Date('1/13/2020'), new Date('3/7/2021')])
         .range([0, width]);
 
-    let formatTime = d3.timeFormat("%b %Y");
+    var formatTime = d3.timeFormat("%b %Y");
     lineG.append("g")
         .attr("transform", `translate(0, ${height})`)
         .call(d3.axisBottom(x).tickFormat(formatTime))
@@ -182,7 +182,7 @@ function plotLineChart(data) {
         .y(function (d) { return y(d.count) });
     /* .curve(d3.curveStepBefore); */
 
-    /*  let line = d3.area()
+    /*  var line = d3.area()
          .x(function (d) { return x(d.date) })
          .y0(y(1))
          .y1(d => y(d.count))
@@ -216,7 +216,7 @@ function plotLineChart(data) {
         .style("font-size", 13);
 
     // add legend
-    let legend = d3.select('#legend').append("g").attr("transform", `translate(${20},${90})`);
+    var legend = d3.select('#legend').append("g").attr("transform", `translate(${20},${90})`);
     addSquareBoxesLegend(legend, attrs, linesColorScale);
 }
 
@@ -235,7 +235,7 @@ function plotAuxillrairyLines(state) {
 }
 
 function plotBarChart(data) {
-    let titleHt = document.getElementById('title').offsetHeight;
+    var titleHt = document.getElementById('title').offsetHeight;
     const margin = { top: 10, right: 90, bottom: 40, left: 100 },
         width = window.innerWidth - margin.left - margin.right,
         height = (window.innerHeight - titleHt) / 2 - margin.top - margin.bottom;
@@ -269,7 +269,7 @@ function plotBarChart(data) {
         .selectAll("text")
         .attr("class", "bar-labels")
         .attr("fill", function (d, i) {
-            let stateData = stackedData[0][i].data;
+            var stateData = stackedData[0][i].data;
             if (stateData.onVentilatorCumulative === 0 || stateData.inIcuCumulative === 0)
                 return "grey";
             else return "black";
@@ -291,7 +291,7 @@ function plotBarChart(data) {
         .call(d3.axisLeft(y));
 
     // Show the bars
-    let stackedGroups = barG.append("g")
+    var stackedGroups = barG.append("g")
         .selectAll(".bar")
         // Enter in the stack data = loop key per key = group per group
         .data(stackedData)
@@ -344,7 +344,7 @@ function plotBarChart(data) {
         .attr("text-anchor", "middle");
 
     // add legend
-    let legend = d3.select("#bar-legend").append("g").attr("transform", `translate(${width + 20}, ${margin.top})`);
+    var legend = d3.select("#bar-legend").append("g").attr("transform", `translate(${width + 20}, ${margin.top})`);
     addSquareBoxesLegend(legend, ['Cumulative in ICU', 'Cumulative in Ventilators'], linesColorScale);
 }
 
@@ -364,7 +364,7 @@ function highlight(state) {
     // highlight line
     highlightedState = state;
     d3.selectAll(`.path`).style("opacity", 0.2);
-    let path = d3.select(`#path-${state}`);
+    var path = d3.select(`#path-${state}`);
     path.style("opacity", "1").attr("stroke", "#3E75E1");
     path.raise();
     // highlight auxilliary lines
@@ -397,9 +397,9 @@ function updateState(state) {
 }
 
 function parseTotalData(dataset) {
-    let totalData = {};
-    for (let i = 0; i < dataset.length; i++) {
-        let d = dataset[i];
+    var totalData = {};
+    for (var i = 0; i < dataset.length; i++) {
+        var d = dataset[i];
 
         if (totalData[d.state] === undefined) { // get the max for all for all states
             totalData[d.state] = { positive: 0, death: 0, hospitalizedCumulative: 0, hospitalizedCurrently: 0 };
@@ -419,9 +419,9 @@ function parseTotalData(dataset) {
 }
 
 function parseBarData(dataset) {
-    let totalData = {};
-    for (let i = 0; i < dataset.length; i++) {
-        let d = dataset[i];
+    var totalData = {};
+    for (var i = 0; i < dataset.length; i++) {
+        var d = dataset[i];
         if (!Object.keys(totalData).includes(d.state)) {
             totalData[d.state] = [{ field: 'Cumulative On ICU', value: 0 }, { field: 'Cumulative On Ventilator', value: 0 }];
         }
@@ -431,8 +431,8 @@ function parseBarData(dataset) {
         if (+d.onVentilatorCurrently !== 0)
             totalData[d.state][1].value += +d.onVentilatorCurrently;
     }
-    let stateData = [];
-    for (let elm of Object.keys(totalData)) {
+    var stateData = [];
+    for (var elm of Object.keys(totalData)) {
         stateData.push({
             state: elm,
             inIcuCumulative: totalData[elm][0].value,
@@ -444,11 +444,10 @@ function parseBarData(dataset) {
 }
 
 function parsedailyData(dataset) {
-    let dailyData = {};
-    for (let i = 0; i < dataset.length; i++) {
-        let d = dataset[i];
+    var dailyData = {};
+    for (var i = 0; i < dataset.length; i++) {
+        var d = dataset[i];
         if (!Object.keys(dailyData).includes(d.state)) {
-            //dailyData[d.state] = [{ field: 'Cumulative Positive Cases', values: [] }, { field: 'Cumulative Recovered', values: [] }, { field: 'Cumulative Hospitalized', values: [] }, { field: 'Cumulative Death', values: [] }];
             dailyData[d.state] = [{ field: 'Cumulative Positive Cases', values: [] }, { field: 'Cumulative Death', values: [] }];
         }
         // update array: take the last number for the end of week
@@ -469,9 +468,9 @@ function parsedailyData(dataset) {
 }
 
 function addRectangleLegend(id, data) {
-    let x = 40;
-    let y = 110;
-    let legend = d3.select(id).append("g").attr("transform", `translate(${x}, ${y})`);
+    var x = 40;
+    var y = 110;
+    var legend = d3.select(id).append("g").attr("transform", `translate(${x}, ${y})`);
     var extent = d3.extent(data, d => d.value);
 
     var padding = 9;
@@ -510,10 +509,10 @@ function addRectangleLegend(id, data) {
 }
 
 function addCircleLegend(id, values, scale) {
-    let x = 80;
-    let y = 80;
-    let legend = d3.select(id).append("g").attr("transform", `translate(${x}, ${y})`);
-    let textPadding = 50;
+    var x = 80;
+    var y = 80;
+    var legend = d3.select(id).append("g").attr("transform", `translate(${x}, ${y})`);
+    var textPadding = 50;
 
     // circles
     legend.selectAll(".legend-circle")
@@ -534,7 +533,7 @@ function addCircleLegend(id, values, scale) {
         .join('line')
         .attr('class', 'values-labels')
         .attr('x1', 0)
-        .attr('x2', Math.abs(scale(Math.max(Math.abs(values[0]), Math.abs(values.at(-1))))) + 14)
+        .attr('x2', Math.abs(scale(Math.max(Math.abs(values[0]), Math.abs(values.slice(-1))))) + 14)
         .attr('y1', d => - 2 * Math.abs(scale(d)))
         .attr('y2', d => - 2 * Math.abs(scale(d)))
         .style('stroke', 'grey')
@@ -546,7 +545,7 @@ function addCircleLegend(id, values, scale) {
         .data(values)
         .join('text')
         .attr('class', 'text-labels')
-        .attr('x', Math.abs(scale(Math.max(Math.abs(values[0]), Math.abs(values.at(-1))))) + 14 + textPadding)
+        .attr('x', Math.abs(scale(Math.max(Math.abs(values[0]), Math.abs(values.slice(-1))))) + 14 + textPadding)
         .attr('y', d => (- 2 * Math.abs(scale(d))) + 4)
         .attr('shape-rendering', 'crispEdges')
         .style('text-anchor', 'end')
@@ -568,8 +567,8 @@ function addCircleLegend(id, values, scale) {
 }
 
 function addSquareBoxesLegend(legend, titles, linesColorScale) {
-    let size = 12;
-    let y = 100;
+    var size = 12;
+    var y = 100;
     legend.selectAll(".square")
         .data(titles)
         .join("rect")
