@@ -1,0 +1,19 @@
+.states {
+    pointer-events: none;
+}
+
+.bubble, .path, .bar, .bar-labels {
+    cursor: pointer;
+}
+
+#title {
+    text-align: center;
+    font-weight: 600;
+    font-family: 'Dosis', sans-serif;
+    margin-bottom: 0;
+}
+
+#state {
+    font-weight: 500;
+    font-family: 'Dosis', sans-serif;
+}
