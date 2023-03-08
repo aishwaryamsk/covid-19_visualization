@@ -211,7 +211,7 @@ function plotLineChart(data) {
     // add axis labels
     lineG.append('text')
         .attr('transform', `translate(${- 40}, ${(height + margin.top + margin.bottom) / 2}) rotate(${-90})`)
-        .text('Cumulative Positive Cases (Log Scale)')
+        .text('Cumulative Cases (Log Scale)')
         .attr('text-anchor', 'middle')
         .style("font-size", 13);
 
