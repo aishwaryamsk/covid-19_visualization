@@ -6,6 +6,6 @@ The chart provides an overview of the trajectory that COVID-19 took in the US. I
 
 Hover on any US state to view the state's details in other charts.
 
-**Link:** [COVID-19 Visualization](https://aishwaryamsk.github.io/covid-19_visualiaztion/index.html) 
+**Link:** [COVID-19 Visualization](https://aishwaryamsk.github.io/covid-19_visualization/) 
 
 **Source:** [The COVID Tracking Project](https://covidtracking.com/data/download)
