@@ -1,10 +1,10 @@
 # COVID-19 Visualization
 
-**Overview**: Visualizing the rampage of COVID-19 in the US
+**Overview**: Visualizing the toll of COVID-19 in the US
 
-The chart provides an overview of the trajectory that COVID-19 took in the US. It looks at the positive COVID-19 cases, deaths related to COVID-19, and hospitalizations that resulted from COVID-19 in the US states.
+The chart provides an overview of the impact of COVID-19 in the US. It looks at the COVID-19 positive cases and COVID-19-related deaths and hospitalizations in the US.
 
-Hover on any US state to view the state's details in other charts.
+Hover on any US state to view the state's details in charts.
 
 **Link:** [COVID-19 Visualization](https://aishwaryamsk.github.io/covid-19_visualization/) 
 
