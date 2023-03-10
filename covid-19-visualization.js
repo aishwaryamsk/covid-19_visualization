@@ -13,8 +13,7 @@ function loadData() {
         d3.csv("covid_states_data.csv"),
         d3.csv("US_state_names.csv"),
     ]).then(function (dataset) {
-        d3.select("#legend").attr("height", 280).attr("width", legendWidth)
-        //.style("background-color", "plum");
+        d3.select("#legend").attr("height", 280).attr("width", legendWidth);
         dailyData = parsedailyData(dataset[0]);
         var totalData = parseTotalData(dataset[0]);
         var stateData = parseBarData(dataset[0]);
@@ -23,7 +22,7 @@ function loadData() {
         });
         plotBubbleChart(totalData);
         plotLineChart(dailyData);
-        plotBarChart(stateData);
+        plotBarChart(stateData, totalData);
     });
 
 }
@@ -234,7 +233,7 @@ function plotAuxillrairyLines(state) {
         .attr("d", d => line(d.values));
 }
 
-function plotBarChart(data) {
+function plotBarChart(data, totalData) {
     var titleHt = document.getElementById('title').offsetHeight;
     const margin = { top: 10, right: 90, bottom: 40, left: 100 },
         width = window.innerWidth - margin.left - margin.right,
@@ -298,7 +297,9 @@ function plotBarChart(data) {
         .join("g")
         .attr("id", (d, i) => `bar-${i}`)
         .attr('class', 'bar')
-        .attr("fill", d => linesColorScale(d.key))
+        .attr("fill", d => linesColorScale(d.key));
+
+
 
     stackedGroups.selectAll("rect")
         // enter a second time = loop subgroup per subgroup to add all rectangles
@@ -321,6 +322,22 @@ function plotBarChart(data) {
             highlightedState = undefined;
         });
 
+    // Add lines to show death per state
+    barG.append('g')
+        .selectAll('.num-dead-line')
+        .data(Object.keys(totalData))
+        .join("line")
+        .attr('class', 'num-dead-line')
+        .attr("x1", d => x(d))
+        .attr("x2", d => x(d) + x.bandwidth())
+        .attr("y1", d => y(totalData[d].death))
+        .attr("y2", d => y(totalData[d].death))
+        .attr("stroke", "black")
+        .attr("stroke-dasharray", "4 2");
+
+
+
+
     // add axis labels
     barSVG.append('text')
         .attr('transform', `translate(${(margin.left / 2) - 20}, ${(height + margin.top + margin.bottom) / 2}) rotate(${- 90})`)
@@ -330,7 +347,7 @@ function plotBarChart(data) {
 
     // add comment
     barSVG.append('text')
-        .attr('transform', `translate(${width + margin.left}, ${margin.top+180})`)
+        .attr('transform', `translate(${width + margin.left}, ${margin.top + 180})`)
         .text('*Limited data available')
         .attr('text-anchor', 'middle')
         .attr('fill', '#9A9A9A')
@@ -345,7 +362,7 @@ function plotBarChart(data) {
 
     // add legend
     var legend = d3.select("#bar-legend").append("g").attr("transform", `translate(${width + 20}, ${margin.top})`);
-    addSquareBoxesLegend(legend, ['Cumulative in ICU', 'Cumulative in Ventilators'], linesColorScale);
+    addSquareBoxesLegend(legend, ['Cumulative in ICU', 'Cumulative in Ventilators'], linesColorScale, ['Cumulative Death']);
 }
 
 function handleHighlight(d) {
@@ -566,9 +583,9 @@ function addCircleLegend(id, values, scale) {
         .style('fill', '#7346F5');
 }
 
-function addSquareBoxesLegend(legend, titles, linesColorScale) {
+function addSquareBoxesLegend(legend, titles, linesColorScale, lineTitle) {
     var size = 12;
-    var y = 100;
+    var y = 60;
     legend.selectAll(".square")
         .data(titles)
         .join("rect")
@@ -580,16 +597,27 @@ function addSquareBoxesLegend(legend, titles, linesColorScale) {
         .style("fill", function (d) { return linesColorScale(d) });
 
     // Add one dot in the legend for each name.
+    let allTitles = lineTitle !== undefined ? titles.concat(lineTitle) : titles;
     legend.selectAll(".labels")
-        .data(titles)
+        .data(allTitles)
         .join("text")
         .attr("class", "labels")
         .attr("x", 17)
         .attr("y", function (d, i) { return y + i * 25 }) // 100 is where the first dot appears. 25 is the distance between dots
-        .style("fill", function (d) { return linesColorScale(d) })
+        .style("fill", function (d) { if (lineTitle && lineTitle.includes(d)) return "grey"; return linesColorScale(d); })
         .text(function (d) { return d })
         .attr("text-anchor", "left")
         .style("alignment-baseline", "middle")
         .style("font-weight", "500")
         .style("font-size", 11);
+
+    // Add dotted lines
+    if (lineTitle !== undefined)
+        legend.append("line")
+            .attr("x1", 0)
+            .attr("x2", size)
+            .attr("y1", (y) + titles.length * (size + 12))
+            .attr("y2", (y) + titles.length * (size + 12))
+            .attr("stroke", "black")
+            .attr("stroke-dasharray", "4 2");
 }
