@@ -216,7 +216,7 @@ function plotLineChart(data) {
 
     // add legend
     var legend = d3.select('#legend').append("g").attr("transform", `translate(${20},${90})`);
-    addSquareBoxesLegend(legend, attrs, linesColorScale);
+    addSquareBoxesLegend(legend, attrs, 100, linesColorScale);
 }
 
 function plotAuxillrairyLines(state) {
@@ -362,7 +362,7 @@ function plotBarChart(data, totalData) {
 
     // add legend
     var legend = d3.select("#bar-legend").append("g").attr("transform", `translate(${width + 20}, ${margin.top})`);
-    addSquareBoxesLegend(legend, ['Cumulative in ICU', 'Cumulative in Ventilators'], linesColorScale, ['Cumulative Death']);
+    addSquareBoxesLegend(legend, ['Cumulative in ICU', 'Cumulative in Ventilators'], 50, linesColorScale, ['Cumulative Death']);
 }
 
 function handleHighlight(d) {
@@ -583,9 +583,9 @@ function addCircleLegend(id, values, scale) {
         .style('fill', '#7346F5');
 }
 
-function addSquareBoxesLegend(legend, titles, linesColorScale, lineTitle) {
+function addSquareBoxesLegend(legend, titles, y, linesColorScale, lineTitle) {
     var size = 12;
-    var y = 90;
+    //var y = 90;
     legend.selectAll(".square")
         .data(titles)
         .join("rect")
