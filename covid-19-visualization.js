@@ -585,7 +585,7 @@ function addCircleLegend(id, values, scale) {
 
 function addSquareBoxesLegend(legend, titles, linesColorScale, lineTitle) {
     var size = 12;
-    var y = 60;
+    var y = 90;
     legend.selectAll(".square")
         .data(titles)
         .join("rect")
