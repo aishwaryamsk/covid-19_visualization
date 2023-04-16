@@ -2,9 +2,9 @@
 
 **Overview**: Visualizing the toll of COVID-19 in the US
 
-![covid19_7450](https://user-images.githubusercontent.com/8591463/232329314-0ec2e93a-bb88-4baf-9d53-c51e163291fb.jpg)
-
 <img height="377" width="641" alt="covid19_7450" src="[https://user-images.githubusercontent.com/8591463/224464222-2faca114-94b1-421d-a6df-377b4a1e7b7b.png](https://user-images.githubusercontent.com/8591463/232329314-0ec2e93a-bb88-4baf-9d53-c51e163291fb.jpg)">
+
+<img width="641" alt="covid19_7450" src="https://user-images.githubusercontent.com/8591463/232329314-0ec2e93a-bb88-4baf-9d53-c51e163291fb.jpg">
 
 <img width="641" alt="covid19_7450" src="https://user-images.githubusercontent.com/8591463/224464222-2faca114-94b1-421d-a6df-377b4a1e7b7b.png">
 
