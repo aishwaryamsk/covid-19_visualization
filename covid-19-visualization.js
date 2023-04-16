@@ -59,7 +59,7 @@ function plotBubbleChart(data) {
 
     const sizeScale = d3.scaleSqrt()
         .domain([0, maxHospitalized])
-        .range([0, 20]);
+        .range([5, 20]);
 
     bubbleG.append("g")
         .attr("transform", `translate(0, ${height})`)
@@ -80,9 +80,9 @@ function plotBubbleChart(data) {
         .attr("class", "bubble")
         .attr("cx", d => x(data[d].death))
         .attr("cy", d => y(data[d].positive))
-        .attr("r", 5)
         .attr("r", d => sizeScale(data[d].hospitalizedCurrently))
-        .style("fill", d => colorScaleHosipitalized(data[d].hospitalizedCurrently))
+        //.style("fill", d => colorScaleHosipitalized(data[d].hospitalizedCurrently))
+        .style("fill", d => (data[d].hospitalizedCurrently === 0) ? '#C0C0C0' : colorScaleHosipitalized(data[d].hospitalizedCurrently))
         .style("opacity", 0.7)
         .attr("stroke", "black")
         .style("stroke-width", 0)
@@ -101,7 +101,7 @@ function plotBubbleChart(data) {
         .attr("x", d => x(data[d].death))
         .attr("y", d => y(data[d].positive)) // 100 is where the first dot appears. 25 is the distance between dots
         .style("fill", function (d) {
-            if (d == "TX" || d == "CA")
+            if (d == "TX" || d == "CA" || d == "NY")
                 return "#F1F1F1";
             else return "#616060";
         })
@@ -110,7 +110,7 @@ function plotBubbleChart(data) {
         .style("alignment-baseline", "middle")
         .style("font-weight", "500")
         .style("font-size", function (d) {
-            if (data[d].hospitalizedCurrently > 500000) {
+            if (sizeScale(data[d].hospitalizedCurrently) >= 12) {
                 return 7;
             } else return 0;
         });
@@ -428,9 +428,11 @@ function parseTotalData(dataset) {
             totalData[d.state].death = +d.death;
         }
         if (totalData[d.state].hospitalizedCumulative == 0) {
-            totalData[d.state].hospitalizedCumulative = +d.hospitalizedCumulative;
+            //totalData[d.state].hospitalizedCumulative = +d.hospitalizedIncrease;
+            totalData[d.state].hospitalizedCumulative = +d.inIcuCurrently + +d.onVentilatorCurrently;
         }
-        totalData[d.state].hospitalizedCurrently += +d.hospitalizedCurrently;
+        //totalData[d.state].hospitalizedCurrently += +d.hospitalizedIncrease;
+        totalData[d.state].hospitalizedCurrently += +d.inIcuCurrently + +d.onVentilatorCurrently;
     }
     return totalData;
 }
