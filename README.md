@@ -2,11 +2,10 @@
 
 **Overview**: Visualizing the toll of COVID-19 in the US
 
-<img width="641" alt="covid19_7450" src="https://user-images.githubusercontent.com/8591463/232329314-0ec2e93a-bb88-4baf-9d53-c51e163291fb.jpg">
-
 <img width="641" alt="covid19_7450" src="https://user-images.githubusercontent.com/8591463/224464222-2faca114-94b1-421d-a6df-377b4a1e7b7b.png">
 
-<img width="641" alt="covid19_7450" src="https://user-images.githubusercontent.com/8591463/232329836-c68332e8-f653-434f-8cea-69e3cf4ff6dc.png">
+<img width="641" alt="covid19_7450" src="https://user-images.githubusercontent.com/8591463/232329950-1fdce637-e5cb-4efa-a7ad-cf256089bedc.png">
+
 
 
 The chart provides an overview of the impact of COVID-19 in the US. It looks at the COVID-19 positive cases and COVID-19-related deaths and hospitalizations in the US.
